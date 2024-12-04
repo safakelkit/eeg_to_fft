@@ -1,0 +1,36 @@
+% Parametreler
+F = 60;       % Sinyal frekansı (Hz)
+T = 10;       % Toplam sinyal süresi (saniye)
+
+% Zaman vektörü (1 saniyelik aralıklarla)
+t = 0:1:T; % 1'er saniye aralıklarla zaman vektörü
+
+% Sinüs sinyalini oluştur
+y = sin(2 * pi * F * t);
+
+% FFT işlemi (Tam zaman aralığı için yeniden örnekleme gerekli)
+Fs = 1;                  % Örnekleme frekansı (1 Hz, 1 saniye aralık)
+N = length(y);           % Sinyal uzunluğu
+Y = fft(y);              % FFT hesaplama
+f = (0:N-1)*(Fs/N);      % Frekans ekseni
+amplitude = abs(Y)/N;    % Genlik spektrumu
+
+% Sinyali ve FFT'yi çiz
+figure;
+
+% Orijinal sinyal (örnekler)
+subplot(2, 1, 1); % 2 satır, 1. grafik
+stem(t, y, 'b', 'LineWidth', 1.5);
+grid on;
+title('Orijinal Sinüs Sinyali (F = 60 Hz, 1 saniye aralıklarla)');
+xlabel('Zaman (s)');
+ylabel('Genlik');
+
+% Frekans spektrumu
+subplot(2, 1, 2); % 2. grafik
+stem(f, amplitude, 'r', 'LineWidth', 1.5);
+grid on;
+title('Frekans Spektrumu (FFT Sonucu, 1 saniye aralıklar)');
+xlabel('Frekans (Hz)');
+ylabel('Genlik');
+
